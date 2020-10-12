@@ -5,6 +5,7 @@ if [ -f "/boot/ideasky_rebuild" ]; then
     echo "File /boot/ideasky_rebuild exists."
     sudo bash /home/pi/mac_matching
     sudo rm /boot/ideasky_rebuild
+    sudo reboot
 else
     # 檔案 /boot/ideasky_rebuild 不存在
     echo "File /boot/ideasky_rebuild does not exists."
