@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ -f "/boot/ideasky_rebuild" ]; then
+    # 檔案 /boot/ideasky_rebuild 存在
+    echo "File /boot/ideasky_rebuild exists."
+else
+    # 檔案 /boot/ideasky_rebuild 不存在
+    echo "File /boot/ideasky_rebuild does not exists."
+fi

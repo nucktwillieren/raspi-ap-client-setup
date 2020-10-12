@@ -1,3 +1,5 @@
+#!/bin/bash
+
 MAC_ADDRESS="$(cat /sys/class/net/wlan0/address)"
 
 # Populate `/etc/udev/rules.d/70-persistent-net.rules`
