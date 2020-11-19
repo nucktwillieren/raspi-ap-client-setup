@@ -154,7 +154,6 @@ EOF
 # Populate `/bin/start_wifi.sh`
 sudo bash -c 'cat > /bin/rpi-wifi.sh' << EOF
 echo 'Starting Wifi AP and client...'
-sleep 30
 sudo ifdown --force wlan0
 sudo ifdown --force ap0
 sudo ifup ap0
@@ -181,8 +180,8 @@ sudo chmod +x /bin/rpi-wifi.sh
 # EOF
 # sudo systemctl daemon-reload
 # sudo systemctl enable rpi-wifi.service
-crontab -l | { cat; echo "@reboot /bin/rpi-wifi.sh"; } | crontab -
-crontab -l | { cat; echo "@reboot sudo bash /home/pi/rebuild_hook"; } | crontab -
+crontab -l | { cat; echo "@reboot sleep 10 && /bin/rpi-wifi.sh"; } | crontab -
+crontab -l | { cat; echo "@reboot sleep 10 && sudo bash /home/pi/rebuild_hook"; } | crontab -
 
 # Finish
 echo "Wifi configuration is finished! Please reboot your Raspberry Pi to apply changes..."
