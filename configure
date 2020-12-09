@@ -138,6 +138,7 @@ sudo bash -c 'cat > /etc/network/interfaces' << EOF
 source-directory /etc/network/interfaces.d
 auto lo
 auto ap0
+auto eth0
 auto wlan0
 iface lo inet loopback
 allow-hotplug ap0
@@ -149,6 +150,8 @@ allow-hotplug wlan0
 iface wlan0 inet manual
     wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
 iface AP1 inet dhcp
+allow-hotplug eth0
+iface eth0 inet dhcp
 EOF
 
 # Populate `/bin/start_wifi.sh`
@@ -180,8 +183,8 @@ sudo chmod +x /bin/rpi-wifi.sh
 # EOF
 # sudo systemctl daemon-reload
 # sudo systemctl enable rpi-wifi.service
-crontab -l | { cat; echo "@reboot sleep 10 && /bin/rpi-wifi.sh"; } | crontab -
-crontab -l | { cat; echo "@reboot sleep 10 && sudo bash /home/pi/rebuild_hook"; } | crontab -
+crontab -l | { cat; echo "@reboot sleep 40 && /bin/rpi-wifi.sh > /home/pi/rpi-wifi.log 2>&1"; } | crontab -
+crontab -l | { cat; echo "@reboot sleep 40 && sudo bash /home/pi/rebuild_hook > /home/pi/rebuild.log 2>&1"; } | crontab -
 
 # Finish
 echo "Wifi configuration is finished! Please reboot your Raspberry Pi to apply changes..."
