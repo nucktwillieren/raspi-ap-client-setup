@@ -1,5 +1,9 @@
-sh change_host.sh
-sh disable_autologin.sh
-sh enable_uart.sh
-sh set_timezone.sh
-sh change_pw.sh
+sudo chmod +x ./change_host.sh
+sudo chmod +x ./disable_autologin.sh
+sudo chmod +x ./enable_uart.sh
+sudo chmod +x ./set_timezone.sh
+
+./change_host.sh
+./disable_autologin.sh
+./enable_uart.sh
+./set_timezone.sh
