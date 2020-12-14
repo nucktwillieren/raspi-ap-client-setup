@@ -1,10 +1,10 @@
 [Unit]
-Description=MacChecker
+Description=APChecker
 After=network.target
 
 [Service]
 Type=simple
-ExecStart=bash /bin/mac_checker
+ExecStart=bash /bin/ap_checker
 #StandardInput=tty-force
 RestartSec=2
 Restart=always
