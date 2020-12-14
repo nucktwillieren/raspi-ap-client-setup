@@ -21,7 +21,20 @@ function rebuild_hook() {
         # 檔案 /boot/ideasky_rebuild 不存在
         echo "File /boot/ideasky_rebuild does not exists."
     fi
+    sleep 3
 }
+
+function ap_check() {
+    status="$(ip link show ap0 | grep DOWN)"
+    if [[ $status == *"DOWN"* ]]; then
+        echo "AP isn't up."
+        sudo bash -c "/bin/rpi-wifi.sh"
+    else
+        echo "AP is up. Everything is fine."
+    fi
+    sleep 3
+}
+
 
 function mac_check() {
     MAC_ADDRESS="$(cat /sys/class/net/wlan0/address)"
@@ -35,13 +48,14 @@ function mac_check() {
     else
         echo "There is no need for Rebuilding"
     fi
+    sleep 3
 }
 
 while :
 do 
     mac_check
     rebuild_hook    
-    sleep 5
+    ap_check
 done
 
 # sed 's/\(macaddress\}=="\)[^"]*/\1/' ./mac
