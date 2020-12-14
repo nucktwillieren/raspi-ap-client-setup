@@ -1,0 +1,40 @@
+#!/bin/bash
+
+function mac_matching(){
+    MAC_ADDRESS="$(cat /sys/class/net/wlan0/address)"
+
+    # Populate `/etc/udev/rules.d/70-persistent-net.rules`
+    
+    rules = '"SUBSYSTEM=="ieee80211", ACTION=="add|change", ATTR{macaddress}=="${MAC_ADDRESS}", KERNEL=="phy0", \n'
+    rules += '\tRUN+="/sbin/iw phy phy0 interface add ap0 type __ap", \n'
+    rules += '\tRUN+="/bin/ip link set ap0 address ${MAC_ADDRESS}" \n'
+
+    sudo bash -c 'echo $rules > /etc/udev/rules.d/70-persistent-net.rules' 
+
+    echo "Populate /etc/udev/rules.d/70-persistent-net.rules"
+}
+
+while :
+do 
+    MAC_ADDRESS="$(cat /sys/class/net/wlan0/address)"
+    OLD_ADDRESS="$(sed -r 's/^([^"]*"){5}([^"]*).*/\2/' /etc/udev/rules.d/70-persistent-net.rules)"
+    echo $MAC_ADDRESS
+    echo $OLD_ADDRESS
+    if [ "$MAC_ADDRESS" != "$OLD_ADDRESS" ]; then
+        echo "Start Rebuilding Interface"
+        mac_matching()
+        sudo reboot
+    else
+        echo "There is no need for Rebuilding"
+    fi
+    sleep 5
+done
+
+# sed 's/\(macaddress\}=="\)[^"]*/\1/' ./mac
+# sed -i 's/\(macaddress\}=="\)[^"]*/\1'$MAC_ADDRESS'/' ./mac
+# sed -i 's/\(ap0 address \).*/\1'$MAC_ADDRESS'/' ./mac
+# cat ./mac
+# sed 's/^"\(.*\)".*/\1/' a
+# grep -oP 'macaddress}==".*?"' ./mac
+# grep -oP 'ap0 address .*' ./mac
+# grep -oP '"([^"]*)"' ./mac

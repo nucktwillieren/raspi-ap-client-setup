@@ -1,3 +1,4 @@
+#!/bin/bash
 
 CURRENT_HOSTNAME=`cat /etc/hostname | tr -d " \t\n\r"`
 NEW_HOSTNAME=$1
