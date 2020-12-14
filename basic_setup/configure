@@ -14,3 +14,5 @@ sudo disable_autologin
 sudo enable_uart
 sudo set_timezone
 sudo change_host ideasky-gateway
+
+sudo reboot
