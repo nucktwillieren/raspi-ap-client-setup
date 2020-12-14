@@ -193,7 +193,11 @@ sudo chmod +x /bin/rebuild_hook
 
 crontab -l | { cat; echo "@reboot sleep 40 && /bin/rpi-wifi.sh > /home/pi/rpi-wifi.log 2>&1"; } | crontab -
 crontab -l | { cat; echo "* * * * * sudo bash /bin/rebuild_hook > /home/pi/rebuild.log 2>&1"; } | crontab -
-crontab -l | { cat; echo "* * * * * sudo bash /bin/mac_checker > /home/pi/mac_checker.log 2>&1"; } | crontab -
+
+sudo bash -c 'cp ./mac_checker.service /etc/systemd/system/'
+sudo systemctl daemon-reload
+sudo systemctl enable mac_checker.service
+sudo systemctl start mac_checker.service
 
 # Finish
 echo "Wifi configuration is finished! Please reboot your Raspberry Pi to apply changes..."

@@ -1,17 +1,13 @@
 #!/bin/bash
 
-function mac_matching(){
+function mac_matching() {
     MAC_ADDRESS="$(cat /sys/class/net/wlan0/address)"
-
-    # Populate `/etc/udev/rules.d/70-persistent-net.rules`
-    
-    rules = '"SUBSYSTEM=="ieee80211", ACTION=="add|change", ATTR{macaddress}=="${MAC_ADDRESS}", KERNEL=="phy0", \n'
-    rules += '\tRUN+="/sbin/iw phy phy0 interface add ap0 type __ap", \n'
-    rules += '\tRUN+="/bin/ip link set ap0 address ${MAC_ADDRESS}" \n'
-
-    sudo bash -c 'echo $rules > /etc/udev/rules.d/70-persistent-net.rules' 
-
-    echo "Populate /etc/udev/rules.d/70-persistent-net.rules"
+sudo bash -c 'cat > /etc/udev/rules.d/70-persistent-net.rules' << EOF
+SUBSYSTEM=="ieee80211", ACTION=="add|change", ATTR{macaddress}=="${MAC_ADDRESS}", KERNEL=="phy0", \
+  RUN+="/sbin/iw phy phy0 interface add ap0 type __ap", \
+  RUN+="/bin/ip link set ap0 address ${MAC_ADDRESS}
+EOF
+echo "Populate /etc/udev/rules.d/70-persistent-net.rules"
 }
 
 while :
@@ -22,7 +18,7 @@ do
     echo $OLD_ADDRESS
     if [ "$MAC_ADDRESS" != "$OLD_ADDRESS" ]; then
         echo "Start Rebuilding Interface"
-        mac_matching()
+        mac_matching
         sudo reboot
     else
         echo "There is no need for Rebuilding"
