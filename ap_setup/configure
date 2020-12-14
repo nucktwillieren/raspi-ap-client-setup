@@ -184,7 +184,7 @@ sudo chmod +x /bin/rpi-wifi.sh
 # sudo systemctl daemon-reload
 # sudo systemctl enable rpi-wifi.service
 
-crontab -l | { cat; echo "@reboot sleep 40 && /bin/rpi-wifi.sh > /home/pi/rpi-wifi.log 2>&1"; } | crontab -
+# crontab -l | { cat; echo "@reboot sleep 40 && /bin/rpi-wifi.sh > /home/pi/rpi-wifi.log 2>&1"; } | crontab -
 
 sudo bash -c 'cp ./ap_checker /bin/'
 sudo chmod +x /bin/ap_checker
