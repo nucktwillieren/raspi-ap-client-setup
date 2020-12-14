@@ -197,3 +197,5 @@ sudo systemctl start ap_checker.service
 # Finish
 echo "Wifi configuration is finished! Please reboot your Raspberry Pi to apply changes..."
 sudo reboot
+
+# sudo bash configure -a apname appassword -c wifi wifipassword
