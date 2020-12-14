@@ -10,8 +10,20 @@ EOF
 echo "Populate /etc/udev/rules.d/70-persistent-net.rules"
 }
 
-while :
-do 
+function rebuild_hook() {
+    if [ -f "/boot/ideasky_rebuild" ]; then
+        # 檔案 /boot/ideasky_rebuild 存在
+        echo "File /boot/ideasky_rebuild exists."
+        mac_matching
+        sudo rm /boot/ideasky_rebuild
+        sudo bash -c "reboot"
+    else
+        # 檔案 /boot/ideasky_rebuild 不存在
+        echo "File /boot/ideasky_rebuild does not exists."
+    fi
+}
+
+function mac_check() {
     MAC_ADDRESS="$(cat /sys/class/net/wlan0/address)"
     OLD_ADDRESS="$(sed -r 's/^([^"]*"){5}([^"]*).*/\2/' /etc/udev/rules.d/70-persistent-net.rules)"
     echo $MAC_ADDRESS
@@ -19,10 +31,16 @@ do
     if [ "$MAC_ADDRESS" != "$OLD_ADDRESS" ]; then
         echo "Start Rebuilding Interface"
         mac_matching
-        sudo reboot
+        sudo bash -c "reboot"
     else
         echo "There is no need for Rebuilding"
     fi
+}
+
+while :
+do 
+    mac_check
+    rebuild_hook    
     sleep 5
 done
 
