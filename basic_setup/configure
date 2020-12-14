@@ -5,7 +5,12 @@ sudo cp ./disable_autologin /bin/
 sudo cp ./enable_uart /bin/
 sudo cp ./set_timezone /bin/
 
-sudo chmod +x /bin/change_host ideasky-gateway
+sudo chmod +x /bin/change_host
 sudo chmod +x /bin/disable_autologin
 sudo chmod +x /bin/enable_uart
 sudo chmod +x /bin/set_timezone
+
+sudo disable_autologin
+sudo enable_uart
+sudo set_timezone
+sudo change_host ideasky-gateway
