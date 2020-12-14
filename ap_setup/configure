@@ -189,7 +189,7 @@ crontab -l | { cat; echo "@reboot sleep 40 && /bin/rpi-wifi.sh > /home/pi/rpi-wi
 sudo bash -c 'cp ./ap_checker /bin/'
 sudo chmod +x /bin/ap_checker
 
-sudo bash -c 'cp ./ap_checker.service /etc/systemd/system/'
+sudo bash -c 'cp ./ap_checker.service /lib/systemd/system/'
 sudo systemctl daemon-reload
 sudo systemctl enable mac_checker.service
 sudo systemctl start mac_checker.service
