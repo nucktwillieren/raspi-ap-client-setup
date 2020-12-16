@@ -53,3 +53,6 @@ EOF
 wpa_cli reconfigure
 sudo ifdown --force wlan0
 sudo ifup wlan0
+sleep 4
+sudo ifup wlan0
+sudo dhclient wlan0
